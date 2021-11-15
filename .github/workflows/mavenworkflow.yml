@@ -1,7 +1,7 @@
 name: Github actions with maven build and deploy
-on: 
+on:
   push:
-    branches: 
+    branches:
     - main
 jobs:
   Do-the-travis-thing:
@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v2
       - name: setup jdk 11
         uses: actions/setup-java@v2
-        with: 
+        with:
           java-version: '11'
           distribution: 'adopt' # openjdk see the setup java action: https://github.com/actions/setup-java
       # - name: Set up MySQL
@@ -40,9 +40,10 @@ jobs:
           mysql version: '8.0' # Optional, default value is "latest". The version of the MySQL
           mysql database: 'startcode_test' # Optional, default value is "test". The specified database which will be create
           # mysql root password: ${{ secrets.RootPassword }} # Required if "mysql user" is empty, default is empty. The root superuser password
-          mysql user: 'dev' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
+          mysql user: ${{ secrets.DB_USER }} # Required if "mysql root password" is empty, default is empty. The
+          superuser for the specified database. Can use secrets, too
           # mysql password: ${{ secrets.DatabasePassword }} # Required if "mysql user" exists. The password for the "mysql user"
-          mysql password: 'ax2'
+          mysql password: ${{ secrets.DB_PW }};
       - name: Cache Maven packages # cache maven repos to save time on future builds
         uses: actions/cache@v2
         with:
